@@ -3,6 +3,8 @@ import AuthenticateUserController from './controllers/AuthenticateUserController
 import CreateUserController from './controllers/CreateUserController';
 import CreateTagController from './controllers/CreateTagController';
 import CreateComplimentController from './controllers/CreateComplimentController';
+import ListComplimentsByUserSenderController from './controllers/ListComplimentsByUserSenderController';
+import ListComplimentsByUserReceiverController from './controllers/ListComplimentsByUserReceiverController';
 import ensureAuthenticated from './middlewares/ensureAuthenticated';
 import ensureAdmin from './middlewares/ensureAdmin';
 
@@ -12,10 +14,15 @@ const authenticateUserController = new AuthenticateUserController();
 const createUserController = new CreateUserController();
 const createTagController = new CreateTagController();
 const createComplimentController = new CreateComplimentController();
+const listComplimentsByUserSenderController = new ListComplimentsByUserSenderController();
+const listComplimentsByUserReceiverController = new ListComplimentsByUserReceiverController();
 
 routes.post('/users', createUserController.handle);
 routes.post('/tags', ensureAuthenticated, ensureAdmin, createTagController.handle);
 routes.post('/login', authenticateUserController.handle);
 routes.post('/compliments', ensureAuthenticated, createComplimentController.handle);
+
+routes.get('/compliments/user_sender', ensureAuthenticated, listComplimentsByUserSenderController.handle);
+routes.get('/compliments/user_receiver', ensureAuthenticated, listComplimentsByUserReceiverController.handle);
 
 export default routes;
