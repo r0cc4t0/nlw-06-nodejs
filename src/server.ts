@@ -1,10 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import 'reflect-metadata';
+import cors from 'cors';
 import './database';
 import routes from './routes';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
